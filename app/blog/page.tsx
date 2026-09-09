@@ -8,7 +8,6 @@ import { BLOG_POSTS } from '@/data/apartments';
 
 export default function BlogIndexPage() {
   const [featuredPost, ...otherPosts] = BLOG_POSTS;
-
   return (
     <div className="min-h-screen bg-slate-50/40 pb-20 pt-10 sm:pt-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
