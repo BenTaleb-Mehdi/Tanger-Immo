@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { MapPin, Home, Banknote, ArrowUpDown, Filter, Sparkles, Building2 } from 'lucide-react';
 import { APARTMENTS } from '@/data/apartments';
@@ -8,7 +8,7 @@ import ApartmentCard from '@/components/apartments/ApartmentCard';
 import CustomCombobox, { ComboboxOption } from '@/components/ui/CustomCombobox';
 import { siteConfig } from '@/data/siteConfig';
 
-export default function ApartmentsPage() {
+function ApartmentsContent() {
   const searchParams = useSearchParams();
 
   const initialStatus = searchParams.get('status') || 'all';
@@ -226,5 +226,30 @@ export default function ApartmentsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ApartmentsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-50/50 pb-20 pt-8 sm:pt-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="animate-pulse space-y-6">
+              <div className="h-8 bg-slate-200 rounded-lg w-1/3" />
+              <div className="h-4 bg-slate-200 rounded-lg w-1/4" />
+              <div className="h-24 bg-white rounded-3xl border border-slate-200/80" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="h-80 bg-slate-200 rounded-3xl" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <ApartmentsContent />
+    </Suspense>
   );
 }
